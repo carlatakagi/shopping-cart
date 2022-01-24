@@ -1,7 +1,15 @@
 // recuperar os itens do carrinho de compras do localStorage quando carregamos a página
-// https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/getItem
+// getItem - https://developer.mozilla.org/pt-BR/docs/Web/API/Storage/getItem
+// sempre que usar getItem temos que usar o JSON.parse pois o getItem retorna string e precisa retornar objeto
+// JSON.parse quando for pegar coisas, precis ter uma parametro de string
 const getSavedCartItems = () => {
-  localStorage.getItem('cartItems');
+  const savedCartItems = window.localStorage.getItem('cartItems'); 
+  
+  // return saveCartItems ? JSON.parse(saveCartItems) : [];
+  if (savedCartItems) {
+    return JSON.parse(savedCartItems);
+  }
+    return [];
 };
 
 if (typeof module !== 'undefined') {
