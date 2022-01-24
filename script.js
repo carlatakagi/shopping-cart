@@ -24,10 +24,35 @@ function createCustomElement(element, className, innerText) {
   return item.querySelector('span.item__sku').innerText;
 } */
 
+// funcao que cria a divTotalPrice 
+function mountTotalPrice(cartItemsSaved) {
+  const cartItems = document.querySelector('.cart');
+  const divTotalPrice = document.createElement('div');
+  divTotalPrice.className = 'total-price';
+
+  const savedCartItemsTotalPrice = cartItemsSaved.reduce((total, item) => 
+    total + item.salePrice, 0);
+  
+  divTotalPrice.innerText = savedCartItemsTotalPrice;
+
+  cartItems.append(divTotalPrice);
+}
+
+// funcao que atualiza o preço total
+function updateTotalPrice(price, operator) {
+  const divTotalPrice = document.querySelector('.total-price');
+  const currentTotalPrice = Number(divTotalPrice.innerText);
+
+  if (operator === 'sum') {
+    divTotalPrice.innerText = currentTotalPrice + price;
+  } else if (operator === 'minus') {
+    divTotalPrice.innerText = currentTotalPrice - price;
+  }
+}
 // o carrinho de compras deve ser salvo no LocalStorage,
 // ou seja, todas as adições e remoções devem ser abordadas para que a lista esteja sempre atualizada.
 // funcao para remover o item do carrinho ao clicar nele
-function cartItemClickListener(event, sku) {
+function cartItemClickListener(event, sku, price) {
   // coloque seu código aqui
   const cartItemsSaved = getSavedCartItems();
 
@@ -35,6 +60,7 @@ function cartItemClickListener(event, sku) {
 
   const updatedSavedCartItems = cartItemsSaved.filter((item) => item.sku !== sku);
 
+  updateTotalPrice(price, 'minus');
   saveCartItems(JSON.stringify(updatedSavedCartItems));
 }
 
@@ -58,10 +84,6 @@ function saveProductOnLocalStorage(productObject) {
   saveCartItems(JSON.stringify(savedItems));
 }
 
-function sumTotalPrice(price) {
-
-}
-
 // funcao async que dá um appendChild dos itens no carrinho
 // e salva com o saveProductOnLocalStorage = nao esta salvando
 // lidando com a açao do click de adicionar ao carrinho
@@ -74,7 +96,7 @@ async function handleAddToCartClick(sku) {
   listCartItems.appendChild(cartItem);
 
   saveProductOnLocalStorage(productObject);
-  sumTotalPrice(price);
+  updateTotalPrice(price);
 }
 
 // funcao para criar produto (fetchProducts)
@@ -86,7 +108,6 @@ function createProductItemElement({ sku, name, image, price }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('span', 'item__price', price));
-  console.log(price);
   const buttonAddCart = section.appendChild(
     createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
   );
@@ -127,7 +148,7 @@ function clearAllItems() {
   const divTotalPrice = document.querySelector('.total-price');
 
   clearButton.addEventListener('click', () => {
-    divTotalPrice.innerHTML = 0;
+    divTotalPrice.innerText = 0;
     listCartItems.innerHTML = '';
     window.localStorage.removeItem('cartItems');
   });  
@@ -139,7 +160,7 @@ function toggleLoading(show) {
   if (show) {
     const textLoading = document.createElement('div');
     const listItems = document.querySelector('.items');
-    
+
     textLoading.className = 'loading';
     textLoading.innerText = 'carregando...';
 
@@ -163,6 +184,7 @@ async function init() {
   toggleLoading(false);
   createListItems(results);
   createcartWithSavedItems(cartItemsSaved);
+  mountTotalPrice(cartItemsSaved);
   clearAllItems();
 }
 
