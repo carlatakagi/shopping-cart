@@ -97,7 +97,7 @@ body {
   height: auto;
   margin: 5px;
   width: 200px;
-  border: 2px solid rgb(6, 156, 0);
+  border: 2px solid rgb(234, 234, 233);
   border-radius: 5px;
   box-sizing: border-box;
 }
@@ -119,16 +119,12 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb(212, 30, 30);
+  background-color: rgb(5, 52, 219);
   border: 0;
   cursor: pointer;
   margin: 0;
   padding: 10px;
   color: white;
-}
-
-.item .item__price {
-  text-align: center;
 }
 
 .cart {
@@ -148,7 +144,6 @@ body {
   width: 170px;
   height: 35px;
   margin: 0 auto;
-  cursor: pointer;
-  border: 2px solid rgb(212, 30, 30);
+  border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
 }
