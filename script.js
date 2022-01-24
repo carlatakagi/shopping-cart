@@ -96,7 +96,7 @@ async function handleAddToCartClick(sku) {
   listCartItems.appendChild(cartItem);
 
   saveProductOnLocalStorage(productObject);
-  updateTotalPrice(price);
+  updateTotalPrice(price, 'sum');
 }
 
 // funcao para criar produto (fetchProducts)
