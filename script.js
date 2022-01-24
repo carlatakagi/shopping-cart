@@ -74,9 +74,9 @@ function saveProductOnLocalStorage(productObject) {
   saveCartItems(JSON.stringify(savedItems));
 }
 
-function updateTotalPrice(price) {
+/* function updateTotalPrice(price) {
 
-}
+} */
 
 // funcao async que dá um appendChild dos itens no carrinho
 // e salva com o saveProductOnLocalStorage = nao esta salvando
