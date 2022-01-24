@@ -5,7 +5,7 @@ const listCartItems = document.querySelector('.cart__items');
 
 // funcao para mostrar o texto de "carregando..." durante uma requisição à API
 // acho que tem que colocar no onload com um await antes ou um settimeout
-const loadingText = () => {
+/* const loadingText = () => {
   const listItems = document.querySelector('.items');
 
   const textLoading = document.createElement('p');
@@ -14,7 +14,7 @@ const loadingText = () => {
   textLoading.appendChild(listItems);
 
   return textLoading;
-};
+}; */
 
 // funcao que cria as imagens dos produtos na tela
 function createProductImageElement(imageSource) {
@@ -33,9 +33,9 @@ function createCustomElement(element, className, innerText) {
 }
 
 // serve para pegar o id das box - não sei onde usar
-function getSkuFromProductItem(item) {
+/* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
+} */
 
 // o carrinho de compras deve ser salvo no LocalStorage,
 // ou seja, todas as adições e remoções devem ser abordadas para que a lista esteja sempre atualizada.
