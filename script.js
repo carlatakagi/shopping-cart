@@ -3,22 +3,6 @@
 // ol lista de produtos adicionados no carrinho
 const listCartItems = document.querySelector('.cart__items');
 
-// funcao para mostrar o texto de "carregando..." durante uma requisição à API
-// liga ou desliga o loading
-function toggleLoading(show) {
-  if (show) {
-    const textLoading = document.createElement('div');
-    const listItems = document.querySelector('.items');
-    textLoading.className = 'loading';
-    textLoading.innerText = 'carregando...';
-    textLoading.appendChild(listItems);
-  } else {
-    const textLoading = document.querySelector('.loading');
-
-    textLoading.remove();
-  }
-}
-
 // funcao que cria as imagens dos produtos na tela
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -74,9 +58,9 @@ function saveProductOnLocalStorage(productObject) {
   saveCartItems(JSON.stringify(savedItems));
 }
 
-/* function updateTotalPrice(price) {
+function sumTotalPrice(price) {
 
-} */
+}
 
 // funcao async que dá um appendChild dos itens no carrinho
 // e salva com o saveProductOnLocalStorage = nao esta salvando
@@ -90,6 +74,7 @@ async function handleAddToCartClick(sku) {
   listCartItems.appendChild(cartItem);
 
   saveProductOnLocalStorage(productObject);
+  sumTotalPrice(price);
 }
 
 // funcao para criar produto (fetchProducts)
@@ -136,7 +121,7 @@ function createcartWithSavedItems(cartItemsSaved) {
 }
 
 //  Implemente a lógica no botão Esvaziar carrinho para limpar o carrinho de compras
-// localStorage.removeItem https://qastack.com.br/programming/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed
+// localStorage.clear https://qastack.com.br/programming/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed
 function clearAllItems() {
   const clearButton = document.querySelector('.empty-cart');
   const divTotalPrice = document.querySelector('.total-price');
@@ -148,13 +133,31 @@ function clearAllItems() {
   });  
 }
 
+// funcao para mostrar o texto de "carregando..." durante uma requisição à API
+// liga ou desliga o loading
+function toggleLoading(show) {
+  if (show) {
+    const textLoading = document.createElement('div');
+    const listItems = document.querySelector('.items');
+    
+    textLoading.className = 'loading';
+    textLoading.innerText = 'carregando...';
+
+    listItems.append(textLoading);
+  } else {
+    const textLoading = document.querySelector('.loading');
+
+    textLoading.remove();
+  }
+}
+
 // funcao que inicia o site
 // assincrona pois o fetchProducts é uma func async
 async function init() {
   toggleLoading(true);
-
+  
   const cartItemsSaved = getSavedCartItems(); // colocar funcao dentro de constante quando a funcao retorna algo
-
+  
   const { results } = await fetchProducts('computador');
   
   toggleLoading(false);
