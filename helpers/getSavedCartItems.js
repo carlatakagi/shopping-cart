@@ -5,11 +5,7 @@
 const getSavedCartItems = () => {
   const savedCartItems = window.localStorage.getItem('cartItems'); 
   
-  // return saveCartItems ? JSON.parse(saveCartItems) : [];
-  if (savedCartItems) {
-    return JSON.parse(savedCartItems);
-  }
-    return [];
+  return savedCartItems ? JSON.parse(savedCartItems) : [];
 };
 
 if (typeof module !== 'undefined') {

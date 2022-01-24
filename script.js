@@ -4,17 +4,20 @@
 const listCartItems = document.querySelector('.cart__items');
 
 // funcao para mostrar o texto de "carregando..." durante uma requisição à API
-// acho que tem que colocar no onload com um await antes ou um settimeout
-/* const loadingText = () => {
-  const listItems = document.querySelector('.items');
+// liga ou desliga o loading
+function toggleLoading(show) {
+  if (show) {
+    const textLoading = document.createElement('div');
+    const listItems = document.querySelector('.items');
+    textLoading.className = 'loading';
+    textLoading.innerText = 'carregando...';
+    textLoading.appendChild(listItems);
+  } else {
+    const textLoading = document.querySelector('.loading');
 
-  const textLoading = document.createElement('p');
-  textLoading.className = 'loading';
-  textLoading.innerText = 'carregando...';
-  textLoading.appendChild(listItems);
-
-  return textLoading;
-}; */
+    textLoading.remove();
+  }
+}
 
 // funcao que cria as imagens dos produtos na tela
 function createProductImageElement(imageSource) {
@@ -71,8 +74,13 @@ function saveProductOnLocalStorage(productObject) {
   saveCartItems(JSON.stringify(savedItems));
 }
 
+function updateTotalPrice(price) {
+
+}
+
 // funcao async que dá um appendChild dos itens no carrinho
 // e salva com o saveProductOnLocalStorage = nao esta salvando
+// lidando com a açao do click de adicionar ao carrinho
 async function handleAddToCartClick(sku) {
   const { id, title, price } = await fetchItem(sku);
   const productObject = { sku: id, name: title, salePrice: price };
@@ -128,26 +136,28 @@ function createcartWithSavedItems(cartItemsSaved) {
 }
 
 //  Implemente a lógica no botão Esvaziar carrinho para limpar o carrinho de compras
-// localStorage.clear https://qastack.com.br/programming/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed
+// localStorage.removeItem https://qastack.com.br/programming/9943220/how-to-delete-a-localstorage-item-when-the-browser-window-tab-is-closed
 function clearAllItems() {
   const clearButton = document.querySelector('.empty-cart');
+  const divTotalPrice = document.querySelector('.total-price');
 
   clearButton.addEventListener('click', () => {
+    divTotalPrice.innerHTML = 0;
     listCartItems.innerHTML = '';
-    localStorage.clear(); // window.localStorage.removeItem('cartItems');
+    window.localStorage.removeItem('cartItems');
   });  
 }
 
 // funcao que inicia o site
 // assincrona pois o fetchProducts é uma func async
 async function init() {
-  // loadingText();
+  toggleLoading(true);
 
   const cartItemsSaved = getSavedCartItems(); // colocar funcao dentro de constante quando a funcao retorna algo
 
   const { results } = await fetchProducts('computador');
-  console.log(results);
-
+  
+  toggleLoading(false);
   createListItems(results);
   createcartWithSavedItems(cartItemsSaved);
   clearAllItems();
