@@ -39,28 +39,26 @@ function mountTotalPrice(cartItemsSaved) {
 }
 
 // funcao que atualiza o preço total
-function updateTotalPrice(price, operator) {
+function updateTotalPrice(salePrice, operator) {
   const divTotalPrice = document.querySelector('.total-price');
   const currentTotalPrice = Number(divTotalPrice.innerText);
 
   if (operator === 'sum') {
-    divTotalPrice.innerText = currentTotalPrice + price;
+    divTotalPrice.innerText = currentTotalPrice + salePrice;
   } else if (operator === 'minus') {
-    divTotalPrice.innerText = currentTotalPrice - price;
+    divTotalPrice.innerText = currentTotalPrice - salePrice;
   }
 }
 // o carrinho de compras deve ser salvo no LocalStorage,
 // ou seja, todas as adições e remoções devem ser abordadas para que a lista esteja sempre atualizada.
 // funcao para remover o item do carrinho ao clicar nele
-function cartItemClickListener(event, sku, price) {
-  // coloque seu código aqui
+function cartItemClickListener(event, sku, salePrice) {
   const cartItemsSaved = getSavedCartItems();
 
   event.target.remove();
 
   const updatedSavedCartItems = cartItemsSaved.filter((item) => item.sku !== sku);
-
-  updateTotalPrice(price, 'minus');
+  updateTotalPrice(salePrice, 'minus');
   saveCartItems(JSON.stringify(updatedSavedCartItems));
 }
 
@@ -71,7 +69,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', (event) => cartItemClickListener(event, sku));
+  li.addEventListener('click', (event) => cartItemClickListener(event, sku, salePrice));
   return li;
 }
 
