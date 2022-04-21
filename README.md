@@ -10,3 +10,6 @@ Neste projeto, a Trybe criou as mocks para os testes unitários.
 - Utilizar os seus conhecimentos sobre JavaScript, CSS e HTML;
 - Trabalhar com funções assíncronas;
 - Implementar testes unitários.
+
+## Gif da aplicação funcionando
+<img src="./shopping-cart.gif" alt="aplicação funcionando, adicionando itens ao carrinho e, logo em seguida, excluindo todos." />
