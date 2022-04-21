@@ -1,3 +1,5 @@
+// Criado pela Trybe
+
 const item = require('./item');
 const search = require('./search');
 

@@ -1,3 +1,5 @@
+// Criado pela Trybe
+
 function localStorageSimulator(key) {
   Object.defineProperty(window, 'localStorage', {
     value: {

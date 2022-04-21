@@ -1,3 +1,5 @@
+// Criado pela Trybe
+
 const computadorSearch = {
   "site_id": "MLB",
   "query": "computador",
